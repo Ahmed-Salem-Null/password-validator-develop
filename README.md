@@ -34,7 +34,7 @@ authentication script. The validator uses [`password_verify`][3] to test
 the validity of the provided password hash.
 
 ``` php
-use JeremyKendall\Password\PasswordValidator;
+use AhmedSalem\Password\PasswordValidator;
 
 $validator = new PasswordValidator();
 $result = $validator->isValid($_POST['password'], $hashedPassword);
@@ -86,7 +86,7 @@ user logs in.  All you need to do is provide a validator callback for your
 password hash and then [decorate][6] the validator with the `UpgradeDecorator`.
 
 ``` php
-use JeremyKendall\Password\Decorator\UpgradeDecorator;
+use AhmedSalem\Password\Decorator\UpgradeDecorator;
 
 // Example callback to validate a sha512 hashed password
 $callback = function ($password, $passwordHash, $salt) {
@@ -119,7 +119,7 @@ hashed with `password_hash`, completing the upgrade process.
 
 For more information on this technique, please see Daniel Karp's 
 [Rehashing Password Hashes][10] blog post, and review
-[`JeremyKendall\Password\Tests\Decorator\KarptoniteRehashUpgradeDecoratorTest`][11]
+[`AhmedSalem\Password\Tests\Decorator\KarptoniteRehashUpgradeDecoratorTest`][11]
 to see a sample implementation. 
 
 ### Persisting Rehashed Passwords
@@ -140,7 +140,7 @@ will be automatically persisted.
 
 The Storage Decorator takes two constructor arguments: An instance of
 `PasswordValidatorInterface` and an instance of the
-`JeremyKendall\Password\Storage\StorageInterface`.
+`AhmedSalem\Password\Storage\StorageInterface`.
 
 #### StorageInterface
 
@@ -152,7 +152,7 @@ honoring the interface might look like this:
 
 namespace Example;
 
-use JeremyKendall\Password\Storage\StorageInterface;
+use AhmedSalem\Password\Storage\StorageInterface;
 
 class UserDao implements StorageInterface
 {
@@ -177,7 +177,7 @@ With your `UserDao` in hand, you're ready to decorate a
 
 ``` php
 use Example\UserDao;
-use JeremyKendall\Password\Decorator\StorageDecorator;
+use AhmedSalem\Password\Decorator\StorageDecorator;
 
 $storage = new UserDao($db);
 $validator = new StorageDecorator(new PasswordValidator(), $storage);
@@ -199,8 +199,8 @@ simple - you just need to pass an instance of the `StorageDecorator` as a constr
 
 ``` php
 use Example\UserDao;
-use JeremyKendall\Password\Decorator\StorageDecorator;
-use JeremyKendall\Password\Decorator\UpgradeDecorator;
+use AhmedSalem\Password\Decorator\StorageDecorator;
+use AhmedSalem\Password\Decorator\UpgradeDecorator;
 
 // Example callback to validate a sha512 hashed password
 $callback = function ($password, $passwordHash, $salt) {
@@ -222,7 +222,7 @@ $result = $validator->isValid('password', 'passwordHash', null, 'username');
 
 ### Validation Results
 
-Each validation attempt returns a `JeremyKendall\Password\Result` object. The
+Each validation attempt returns a `AhmedSalem\Password\Result` object. The
 object provides some introspection into the status of the validation process.
 
 * `Result::isValid()` will return `true` if the attempt was successful
@@ -272,12 +272,12 @@ The only officially supported method of installation is via
 
 Running the following command will add the latest version of the library to your project:
 ``` bash
-$ composer require jeremykendall/password-validator
+$ composer require AhmedSalem/password-validator
 ```
 
 You can update to the latest version with this command:
 ``` bash
-$ composer update jeremykendall/password-validator
+$ composer update AhmedSalem/password-validator
 ```
 
 If you're not already using Composer in your project, add the autoloader to your project:
@@ -303,6 +303,6 @@ submitting pull requests.
 [6]: http://en.wikipedia.org/wiki/Decorator_pattern
 [7]: http://csiphp.com/blog/2012/02/16/encrypt-passwords-for-highest-level-of-security/
 [8]: http://php.net/password_hash#example-875
-[9]: http://jeremykendall.net/2014/01/04/php-password-hashing-a-dead-simple-implementation/
+[9]: http://AhmedSalem.net/2014/01/04/php-password-hashing-a-dead-simple-implementation/
 [10]: http://karptonite.com/2014/05/11/rehashing-password-hashes/
-[11]: tests/JeremyKendall/Password/Tests/Decorator/KarptoniteRehashUpgradeDecoratorTest.php
+[11]: tests/AhmedSalem/Password/Tests/Decorator/KarptoniteRehashUpgradeDecoratorTest.php
